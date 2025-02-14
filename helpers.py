@@ -1,6 +1,7 @@
 import requests
 import random
 import string
+from constants import APIEndpoints
 
 
 def generate_unique_courier():
@@ -18,7 +19,7 @@ def generate_unique_courier():
         "firstName": first_name
     }
 
-    response = requests.post("https://qa-scooter.praktikum-services.ru/api/v1/courier", json=payload)
+    response = requests.post(f"{APIEndpoints.BASE_URL}{APIEndpoints.COURIER_CREATE_ENDPOINT}", json=payload)
 
     if response.status_code == 201:
         return [login, password, first_name]

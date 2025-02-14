@@ -8,26 +8,26 @@ class OrderRoutes(BaseRoutes):
     ORDER_LIST = "/api/v1/orders"
     ORDER_DELETE = "/api/v1/orders/"
 
-    @classmethod
-    def create_order(cls, data):
-        return cls.send_request("POST", cls.ORDER_CREATE, data=data)
+    @staticmethod
+    def create_order(data):
+        return BaseRoutes.send_request("POST", OrderRoutes.ORDER_CREATE, data=data)
 
-    @classmethod
-    def accept_order(cls, courier_id, order_id):
+    @staticmethod
+    def accept_order(courier_id, order_id):
         params = {"courierId": courier_id}
-        return cls.send_request("PUT", cls.ORDER_ACCEPT + f"/{order_id}", params=params)
+        return BaseRoutes.send_request("PUT", OrderRoutes.ORDER_ACCEPT + f"/{order_id}", params=params)
 
-    @classmethod
-    def get_order_by_track(cls, track):
+    @staticmethod
+    def get_order_by_track(track):
         params = {"t": track}
-        return cls.send_request("GET", cls.ORDER_TRACK, params=params)
+        return BaseRoutes.send_request("GET", OrderRoutes.ORDER_TRACK, params=params)
 
-    @classmethod
-    def get_orders_list(cls):
-        return cls.send_request("GET", cls.ORDER_LIST)
+    @staticmethod
+    def get_orders_list():
+        return BaseRoutes.send_request("GET", OrderRoutes.ORDER_LIST)
 
-    @classmethod
-    def delete_order(cls, order_id):
+    @staticmethod
+    def delete_order(order_id):
         if not order_id:
             raise ValueError("Order ID is required")
-        return cls.send_request("DELETE", cls.ORDER_DELETE.format(order_id))
+        return BaseRoutes.send_request("DELETE", OrderRoutes.ORDER_DELETE.format(order_id))

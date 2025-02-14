@@ -1,6 +1,7 @@
 import pytest
 import allure
 from routes.order_routes import OrderRoutes
+from data import ORDER_DATA
 
 
 @allure.epic("Order API")
@@ -11,17 +12,9 @@ class TestCreateOrder:
     @allure.story("Создание заказа с различными цветами")
     @allure.title("Тест на создание заказа с параметрами цвета")
     def test_create_order_success(self, color):
-        order_data = {
-            "firstName": "Иван",
-            "lastName": "Иванов",
-            "address": "Ленина 10",
-            "metroStation": 4,
-            "phone": "+7 999 111 22 33",
-            "rentTime": 2,
-            "deliveryDate": "2025-01-01",
-            "comment": "Тест",
-            "color": color
-        }
+        order_data = ORDER_DATA.copy()
+        order_data["color"] = color
+
         response = OrderRoutes.create_order(order_data)
         assert response.status_code == 201, "Не удалось создать заказ"
         assert "track" in response.json(), "Ответ не содержит track заказа"

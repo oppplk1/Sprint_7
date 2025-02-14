@@ -6,17 +6,17 @@ class CourierRoutes(BaseRoutes):
     COURIER_LOGIN = "/api/v1/courier/login"
     COURIER_DELETE = "/api/v1/courier/{}"
 
-    @classmethod
-    def create_courier(cls, data):
-        return cls.send_request("POST", cls.COURIER_CREATE, data=data)
+    @staticmethod
+    def create_courier(data):
+        return BaseRoutes.send_request("POST", CourierRoutes.COURIER_CREATE, data=data)
 
-    @classmethod
-    def login_courier(cls, data):
-        return cls.send_request("POST", cls.COURIER_LOGIN, data=data)
+    @staticmethod
+    def login_courier(data):
+        return BaseRoutes.send_request("POST", CourierRoutes.COURIER_LOGIN, data=data)
 
-    @classmethod
-    def delete_courier(cls, courier_id):
+    @staticmethod
+    def delete_courier(courier_id):
         if not courier_id:
-            return {"status_code": 400, "message": "Courier ID is required"}
+            return {"status_code": 400, "message": "Недостаточно данных для удаления курьера"}
 
-        return cls.send_request("DELETE", cls.COURIER_DELETE.format(courier_id))
+        return BaseRoutes.send_request("DELETE", CourierRoutes.COURIER_DELETE.format(courier_id))
